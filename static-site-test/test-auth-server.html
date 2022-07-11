@@ -27,6 +27,8 @@
         <p id="result"></p>
         <a id="authURL" href target="_blank">Click to authorize</a>
     </main>
+
+
     <script type="text/javascript">
       const getCodeElement = document.getElementById("getCode");
       const resultElement = document.getElementById("result");
@@ -41,7 +43,7 @@
           })
           .then(function (json) {
             const result = JSON.stringify(json);
-            // we get the value of authUrl
+            // we get the value of authUrl here
             const { authUrl } = JSON.parse(result);
             // then add it to the html
             resultElement.innerText = result;
