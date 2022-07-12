@@ -64,6 +64,9 @@ const oAuth2Client = new google.auth.OAuth2(
         // Respond with OAuth token 
         return {
           statusCode: 200,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
           body: JSON.stringify(token),
         };
       })
