@@ -40,56 +40,32 @@ const oAuth2Client = new google.auth.OAuth2(
  *
  */
 
-// Get calendar events
-module.exports.getCalendarEvents = (event) => {
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uris[0]
-  );
-  // Decode authorization code extracted from the URL query
-  const access_token = decodeURIComponent(
-    `${event.pathParameters.access_token}`
-  );
-
-  oAuth2Client.setCredentials({ access_token });
-
-  return new Promise((resolve, reject) => {
-    calendar.events.list(
-      {
-        calendarId: calendar_id,
-        auth: oAuth2Client,
-        timeMin: new Date().toISOString(),
-        singleEvents: true,
-        orderBy: "startTime",
-      },
-      (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
-        }
-      }
-    );
-  }).then((results) => {
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({ events: results.data.items }),
-    };
-  })
-  .catch( error => {
-    return {
-      statusCode: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-      body: JSON.stringify(error),
-    };
+// Get authURL
+module.exports.getAuthURL = async () => {
+  /**
+   *
+   * Scopes array passed to the `scope` option. Any scopes passed must be enabled in the
+   * "OAuth consent screen" settings in your project on your Google Console. Also, any passed
+   *  scopes are the ones users will see when the consent screen is displayed to them.
+   *
+   */
+  const authUrl = oAuth2Client.generateAuthUrl({
+    access_type: "offline",
+    scope: SCOPES,
   });
+
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      authUrl: authUrl,
+    }),
+  };
 };
+
+
 
 // Get access token
 module.exports.getAccessToken = async (event) => {
@@ -135,27 +111,59 @@ module.exports.getAccessToken = async (event) => {
     });
 };
 
-// Get authURL
-module.exports.getAuthURL = async () => {
-  /**
-   *
-   * Scopes array passed to the `scope` option. Any scopes passed must be enabled in the
-   * "OAuth consent screen" settings in your project on your Google Console. Also, any passed
-   *  scopes are the ones users will see when the consent screen is displayed to them.
-   *
-   */
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: "offline",
-    scope: SCOPES,
+//Get Calendar events
+
+module.exports.getCalendarEvents = event => {
+
+  const oAuth2Client = new google.auth.OAuth2(
+    client_id,
+    client_secret,
+    redirect_uris[0]
+  );
+  // Decode authorization code extracted from the URL query
+  const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
+
+  oAuth2Client.setCredentials({ access_token });
+
+  return new Promise( (resolve, reject) => {
+
+    calendar.events.list(
+      {
+        calendarId: calendar_id,
+        auth: oAuth2Client,
+        timeMin: new Date().toISOString(),
+        singleEvents: true,
+        orderBy: "startTime",
+      },
+      (error, response) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(response);
+        }
+      }
+    );
+
+  })
+  .then( results => {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({ events: results.data.items })
+    };
+  })
+  .catch( error => {
+    return {
+      statusCode: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify(error),
+    };
   });
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-    body: JSON.stringify({
-      authUrl: authUrl,
-    }),
-  };
-};
+}
+
+
