@@ -113,7 +113,7 @@ module.exports.getAccessToken = async (event) => {
 
 //Get Calendar events
 
-module.exports.getCalendarEvents = event => {
+module.exports.getCalendarEvents = async (event) => {
 
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -125,27 +125,27 @@ module.exports.getCalendarEvents = event => {
 
   oAuth2Client.setCredentials({ access_token });
 
-  return new Promise( (resolve, reject) => {
+  try {
+    const results = await new Promise((resolve, reject) => {
 
-    calendar.events.list(
-      {
-        calendarId: calendar_id,
-        auth: oAuth2Client,
-        timeMin: new Date().toISOString(),
-        singleEvents: true,
-        orderBy: "startTime",
-      },
-      (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
+      calendar.events.list(
+        {
+          calendarId: calendar_id,
+          auth: oAuth2Client,
+          timeMin: new Date().toISOString(),
+          singleEvents: true,
+          orderBy: "startTime",
+        },
+        (error, response) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(response);
+          }
         }
-      }
-    );
+      );
 
-  })
-  .then( results => {
+    });
     return {
       statusCode: 200,
       headers: {
@@ -153,16 +153,15 @@ module.exports.getCalendarEvents = event => {
       },
       body: JSON.stringify({ events: results.data.items })
     };
-  })
-  .catch( error => {
+  } catch (error_1) {
     return {
       statusCode: 500,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify(error),
+      body: JSON.stringify(error_1),
     };
-  });
+  }
 
 }
 
