@@ -44,7 +44,7 @@ module.exports.getAuthURL = async () => {
 
 module.exports.getAccessToken = async (event) => {
   // The values used to instantiate the OAuthClient 
-  const oAuth2Client = new google.auth.OAuth2(
+  const oAuth2Client = new OAuth2(
     client_id,
     client_secret,
     redirect_uris[0]
