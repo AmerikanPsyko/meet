@@ -1,43 +1,35 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import NumberOfEvents from '../NumberOfEvents';
+import NumberofEvents from '../NumberOfEvents';
+// import { mockData } from '../mock-data';
+// import { getEvents } from '../api';
 
-describe('<NumberOfEvents /> component', () => {
+describe('<NumberOfEvents/> component', () => {
   let NumberOfEventsWrapper;
   beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents updateEvents={() => {}} />);
+    NumberOfEventsWrapper = shallow(<NumberofEvents updateEvents={() => { }} />)
+  })
+
+  test('renders number textbox', () => {
+    expect(NumberOfEventsWrapper.find('.event-count')).toHaveLength(1);
   });
 
-  test('render textbox', () => {
-    expect(NumberOfEventsWrapper.find('#events-number')).toHaveLength(1);
-  });
-
-  test('display number 32 by default', () => {
-    expect(
-      NumberOfEventsWrapper.find('#events-number').get(0).props.value
-    ).toEqual(32);
-  });
-
-  test('user can change the number of events', () => {
-    NumberOfEventsWrapper.find('#events-number').simulate('change', {
-      target: { value: 10 },
+  test('user can change number of events shown', () => {
+    NumberOfEventsWrapper.setState({
+      numberOfEvents: 20
     });
+    const eventObject = { target: { value: 10 } };
+    NumberOfEventsWrapper.find('.event-number').simulate('change', eventObject);
     expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(10);
   });
 
-  test('only allow number above 1 of events > 0', () => {
-    NumberOfEventsWrapper.setState({ numberOfEvents: 32 });
-    NumberOfEventsWrapper.find('#events-number').simulate('change', {
-      target: { value: -1 },
+  test('only numbers > 0 allowed', () => {
+    NumberOfEventsWrapper.setState({
+      numberOfEvents: 20
     });
-    expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(32);
+    const eventObject = { target: { value: -2 } };
+    NumberOfEventsWrapper.find('.event-number').simulate('change', eventObject);
+    expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(20);
   });
 
-  test('only allow number', () => {
-    NumberOfEventsWrapper.setState({ numberOfEvents: 32 });
-    NumberOfEventsWrapper.find('#events-number').simulate('change', {
-      target: { value: 'string' },
-    });
-    expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(32);
-  });
 });

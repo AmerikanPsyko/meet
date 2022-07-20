@@ -1,47 +1,34 @@
-// import React, { Component } from 'react';
-import { shallow } from 'enzyme';
-import NumberOfEvents from '../NumberOfEvents';
+import React, { Component } from "react";
+
+class NumberofEvents extends Component {
 
 
+  handleInputChanged = (event) => {
+    const selectedValue = parseInt(event.target.value);
+    if (selectedValue <= 20 && selectedValue > 0) {
+      this.setState({
+        numberOfEvents: selectedValue
+      });
+    } else {
+      this.setState({
+        numberOfEvents: 20,
+        Error: 'Please select a number greater than 0.'
+      })
+    }
+    this.props.updateEvents(undefined, selectedValue);
+  };
 
-describe('<NumberOfEvents /> component', () => {
-  let NumberOfEventsWrapper;
-  beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents updateEvents={() => {}} />);
-  });
+  render() {
+    const { numberOfEvents } = this.props;
+    return <div className="event-count">
+      <p>Number of Events:</p>
+      <input className="event-number" type="number" min="1" max="100" value={numberOfEvents} onChange={this.handleInputChanged}>
 
-  test('render textbox', () => {
-    expect(NumberOfEventsWrapper.find('#events-number')).toHaveLength(1);
-  });
+      </input>
 
-  test('display number 32 by default', () => {
-    expect(
-      NumberOfEventsWrapper.find('#events-number').get(0).props.value
-    ).toEqual(32);
-  });
 
-  test('user can change the number of events', () => {
-    NumberOfEventsWrapper.find('#events-number').simulate('change', {
-      target: { value: 10 },
-    });
-    expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(10);
-  });
+    </div>
+  }
+}
 
-  test('only allow number above 1 of events > 0', () => {
-    NumberOfEventsWrapper.setState({ numberOfEvents: 32 });
-    NumberOfEventsWrapper.find('#events-number').simulate('change', {
-      target: { value: -1 },
-    });
-    expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(32);
-  });
-
-  test('only allow number', () => {
-    NumberOfEventsWrapper.setState({ numberOfEvents: 32 });
-    NumberOfEventsWrapper.find('#events-number').simulate('change', {
-      target: { value: 'string' },
-    });
-    expect(NumberOfEventsWrapper.state('numberOfEvents')).toEqual(32);
-  });
-});
-
-export default NumberOfEvents;
+export default NumberofEvents;
