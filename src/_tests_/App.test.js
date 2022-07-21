@@ -7,7 +7,8 @@ import { mockData } from '../mock-data';
 import { extractLocations, getEvents } from '../api';
 import NumberofEvents from '../NumberOfEvents';
 
-describe('<App /> component', () => {
+// Unit Testing Scenarios
+describe('<App/> component', () => {
   let AppWrapper;
   beforeAll(() => {
     AppWrapper = shallow(<App />);
@@ -20,24 +21,15 @@ describe('<App /> component', () => {
   test('render CitySearch', () => {
     expect(AppWrapper.find(CitySearch)).toHaveLength(1);
   });
+
+  test('render NumberofEvents component', () => {
+    expect(AppWrapper.find(NumberofEvents)).toHaveLength(1);
+  });
+
 });
 
-test('App passes "locations" state as a prop to CitySearch', () => {
-  const AppWrapper = mount(<App />);
-  const AppLocationsState = AppWrapper.state('locations');
-  expect(AppLocationsState).not.toEqual(undefined);
-  expect(AppWrapper.find(CitySearch).props().locations).toEqual(AppLocationsState);
-  AppWrapper.unmount();
-});
 
-test('App passes "events" state as a prop to EventList', () => {
-  const AppWrapper = mount(<App />);
-  const AppEventsState = AppWrapper.state('events');
-  expect(AppEventsState).not.toEqual(undefined);
-  expect(AppWrapper.find(EventList).props().events).toEqual(AppEventsState);
-  AppWrapper.unmount();
-});
-
+// Integration testing Scenarios
 describe('<App /> integration', () => {
   test('App passes "events" state as a prop to EventList', () => {
     const AppWrapper = mount(<App />);

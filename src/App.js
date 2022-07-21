@@ -24,7 +24,7 @@ class App extends Component {
       location = this.state.locationSelected;
     }
     getEvents().then((events) => {
-      const locationEvents = (location === 'all')
+      let locationEvents = (location === 'all')
         ? events
         : events.filter((event) => event.location === location);
       if (this.mounted) {
