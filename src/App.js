@@ -6,7 +6,7 @@ import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
 // import { Container, Row, Col } from "react-bootstrap";
 // import "bootstrap/dist/css/bootstrap.min.css";
-import NumberOfEvents from "./NumberOfEvents";
+import NumberofEvents from "./NumberOfEvents";
 
 class App extends Component {
   state = {
@@ -59,12 +59,9 @@ class App extends Component {
               md={6}
               className="d-flex flex-column align-items-center justify-content-center p-5"
             > */}
-              <NumberOfEvents updateEvents={this.updateEvents} />
-              <CitySearch
-                locations={this.state.locations}
-                updateEvents={this.updateEvents}
-              />
-              <EventList events={this.state.events} />
+              <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
+              <NumberofEvents numberOfEvents={this.state.numberOfEvents} updateEvents={this.updateEvents} />
+              <EventList events={this.state.events} updateEvents={this.updateEvents} numberOfEvents={this.state.numberOfEvents} />
             {/* </Col>
           </Row>
         </Container> */}

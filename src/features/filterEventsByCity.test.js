@@ -12,10 +12,10 @@ const feature = loadFeature('./src/features/filterEventsByCity.feature');
 defineFeature(feature, test => {
 
     //Scenario 1
-    test('When user hasn’t searched for a city, show upcoming events from all cities.', ({ given, when, then }) => {
-      given('user hasn’t searched for any city', () => {
-  
-      });
+    test('When user hasnt searched for a city, show upcoming events from all cities.', ({ given, when, then }) => {
+        given('user hasnt searched for any city', () => {
+    
+        });
   
       let AppWrapper;
       when('the user opens the app', () => {
@@ -23,28 +23,25 @@ defineFeature(feature, test => {
       });
   
       then('the user should see the list of upcoming events.', () => {
-            AppWrapper.update();
-            expect(AppWrapper.find('.event')).toHaveLength(mockData.length);
-      });
-    });
+        AppWrapper.update();
+        expect(AppWrapper.find('.event')).toHaveLength(mockData.length);
+  });
 
     //Scenario 2
     test('User should see a list of suggestions when they search for a city', ({ given, when, then }) => {
-        
         let CitySearchWrapper;
         given('the main page is open', () => {
-            const locations = extractLocations(mockData);
-            CitySearchWrapper = shallow(<CitySearch updateEvents={() => {}} locations={locations} />);
-
+          const locations = extractLocations(mockData);
+          CitySearchWrapper = shallow(<CitySearch locations={locations} updateEvents={() => { }} />);
         });
       
-      when('the user starts typing in the city textbox', () => {
-        CitySearchWrapper.find('.city').simulate('change', {target: { value: 'Berlin' } });
-      });
+        when('the user starts typing in the city textbox', () => {
+            CitySearchWrapper.find('.city').simulate('change', { target: { value: 'Berlin' } });
+          });
   
-      then('the user should receive a list of cities (suggestions) that match what they’ve typed', () => {
-        expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(2);
-      });
+          then('the user should receive a list of cities (suggestions) that match what theyve typed', () => {
+            expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(2);
+          });
     });
   
     //Scenario 3 
@@ -66,12 +63,12 @@ defineFeature(feature, test => {
           });
   
           then('their city should be changed to that city (i.e., “Berlin, Germany”)', () => {
-            const CitySearchWrapper = AppWrapper.find(CitySearch);
-            expect(CitySearchWrapper.state('query')).toBe('Berlin, Germany');
-          });
+
+        });
   
-          and('the user should receive a list of upcoming events in that city', () => {
+        and('the user should receive a list of upcoming events in that city', () => {
             expect(AppWrapper.find('.event')).toHaveLength(mockData.length);
-          });
+          })
+        });
     });
-  });
+});
