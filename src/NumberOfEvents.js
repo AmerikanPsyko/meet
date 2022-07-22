@@ -1,39 +1,43 @@
 import React, { Component } from "react";
-// import { ErrorAlert } from "./Alert";
+import { ErrorAlert } from './Alert';
 
-class NumberofEvents extends Component {
-
+class NumberOfEvents extends Component {
+  state = {
+    numberOfEvents:32,
+  };
 
   handleInputChanged = (event) => {
-    const selectedValue = parseInt(event.target.value);
+    const value = event.target.value;
 
-    if (selectedValue <= 20 && selectedValue > 0) {
+    if (value <= 0 || value > 32) {
       this.setState({
-        numberOfEvents: 20,
-        infoText: 'Please select a number from 1-20'
-
+        numberOfEvents: "",
+        infoText:"Please enter a number from 1 to 32"
       });
     } else {
       this.setState({
-        numberOfEvents: selectedValue,
-        infoText: ''
-      })
+        numberOfEvents: value,
+        infoText:""
+      });
     }
-    this.props.updateEvents(undefined, selectedValue);
+   
+    this.props.updateEvents(undefined, value);
   };
 
   render() {
-    const { numberOfEvents } = this.props;
-    return <div className="event-count">
-      {/* <ErrorAlert text={this.state.infoText} /> */}
-      <p>Number of Events:</p>
-      <input className="event-number" type="number" min="1" max="100" value={numberOfEvents} onChange={this.handleInputChanged}>
-
-      </input>
-
-
-    </div>
+    return (
+      <div className="NumberOfEvents">
+        <ErrorAlert text={this.state.infoText}/>
+        <p className="numbercount">Number of events</p>
+        <input
+          type="number"
+          className="numberinput"
+          onChange={this.handleInputChanged}
+          value={this.state.numberOfEvents}
+        />
+      </div>
+    );
   }
 }
 
-export default NumberofEvents;
+export default NumberOfEvents;
