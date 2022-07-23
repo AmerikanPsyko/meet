@@ -41,7 +41,16 @@ class CitySearch extends Component {
   render() {
     return (
       <div className='CitySearch'>
-                
+    <InfoAlert id='infoAlert' text={this.state.infoText} />
+        <ul className='suggestions' style={this.state.showSuggestions ? {} : { display: 'none' }}>
+                    {this.state.suggestions.map(suggestion => (
+                        <li key={suggestion} onClick={() => this.handleItemClicked(suggestion)}>{suggestion}</li>
+                    ))}
+                    <li onClick={() => this.handleItemClicked('all')}>
+                        <b>See all cities</b>
+                    </li>
+                </ul>
+               
                 <input
                     type='text'
                     className='city mt-3'
@@ -50,15 +59,10 @@ class CitySearch extends Component {
                     onChange={this.handleInputChanged}
                     onFocus={() => { this.setState({ showSuggestions: true }) }}
                 />
-                <ul className='suggestions' style={this.state.showSuggestions ? {} : { display: 'none' }}>
-                    {this.state.suggestions.map(suggestion => (
-                        <li key={suggestion} onClick={() => this.handleItemClicked(suggestion)}>{suggestion}</li>
-                    ))}
-                    <li onClick={() => this.handleItemClicked('all')}>
-                        <b>See all cities</b>
-                    </li>
-                </ul>
-                <InfoAlert id='infoAlert' text={this.state.infoText} />
+
+
+                
+                
             </div>
     );
   }
