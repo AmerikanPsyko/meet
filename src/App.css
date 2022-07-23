@@ -214,6 +214,10 @@ input[type="number"]:hover {
   font-family: "Roboto";
 }
 
+.ErrorAlert {
+align-items: center;
+}
+
 
 
 @media only screen and (min-width: 992px) {
@@ -228,3 +232,4 @@ input[type="number"]:hover {
     margin: 0 auto;
   }
 }
+

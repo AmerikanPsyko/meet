@@ -4,7 +4,7 @@ import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
-// import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from 'react-bootstrap'
 // import "bootstrap/dist/css/bootstrap.min.css";
 import NumberofEvents from "./NumberOfEvents";
 
@@ -53,18 +53,18 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <Container>
+        <Container>
           <Row className="d-flex justify-content-center align-item-center p-3 m-3">
             <Col
               md={6}
               className="d-flex flex-column align-items-center justify-content-center p-5"
-            > */}
+            >
               <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
               <NumberofEvents numberOfEvents={this.state.numberOfEvents} updateEvents={this.updateEvents} />
               <EventList events={this.state.events} updateEvents={this.updateEvents} numberOfEvents={this.state.numberOfEvents} />
-            {/* </Col>
+            </Col>
           </Row>
-        </Container> */}
+        </Container>
       </div>
     );
   }
