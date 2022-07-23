@@ -3,6 +3,7 @@
 .App {
   text-align: center;
   padding: 2% 5%;
+  background-color: lightgray;
 }
 
 .App * {
@@ -16,6 +17,7 @@ ul {
 
 p {
   margin: 5px 0;
+  align-items: center;
 }
 
 .display-none {
@@ -28,6 +30,7 @@ p {
 
 input[type="text"],
 input[type="number"] {
+  background: lightpink;
   padding: 8px 6px 8px 10px;
   border-radius: 4px;
   outline: none;
@@ -35,12 +38,13 @@ input[type="number"] {
   font-size: 14px;
   line-height: 20px;
   align-self: center;
+  align-content: center;
   height: 38px;
 }
 
 input[type="text"],
 input[type="number"]:hover {
-  border-color: #1669f2;
+  border-color: #000000;
 }
 
 .city {
@@ -52,7 +56,11 @@ input[type="number"]:hover {
   flex-direction: column;
   flex-basis: 300px;
   max-width: 300px;
-  margin: auto;
+  /* margin: auto; */
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
   position: relative;
 }
 
@@ -86,9 +94,9 @@ input[type="number"]:hover {
 .event {
   padding: 10px 10px 35px;
   margin-bottom: 10px;
-  text-align: left;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  text-align: center;
+  border: 4px solid pink;
+  border-radius: 8px;
   position: relative;
 }
 
@@ -126,7 +134,7 @@ input[type="number"]:hover {
 
 .event-count {
   margin: 10px auto;
-  text-align: left;
+  text-align: center;
 }
 
 .button-wrapper {
@@ -138,8 +146,10 @@ input[type="number"]:hover {
 }
 
 .Alert {
-  position: fixed;
+  /* position: fixed; */
+  align-items: center;
   top: 20px;
+  /* margin-top: 45px; */
 }
 
 .data-vis-wrapper {
@@ -214,9 +224,7 @@ input[type="number"]:hover {
   font-family: "Roboto";
 }
 
-.ErrorAlert {
-align-items: center;
-}
+
 
 
 
@@ -233,3 +241,6 @@ align-items: center;
   }
 }
 
+.p-style {
+  align-items: center;
+}
