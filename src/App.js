@@ -98,7 +98,7 @@ class App extends Component {
           updateEvents={this.updateEvents}
         />
         <ScatterChart
-          width={400}
+          width={800}
           height={400}
           margin={{
             top: 20,
