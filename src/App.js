@@ -14,7 +14,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
+import EventGenre from "./EventGenre";
 import NumberofEvents from "./NumberOfEvents";
 
 class App extends Component {
@@ -98,6 +98,9 @@ class App extends Component {
           numberOfEvents={this.state.numberOfEvents}
           updateEvents={this.updateEvents}
         />
+        <div className="data-vis-wrapper">
+        <EventGenre events={this.state.events} locations={this.state.locations} />
+
         <ResponsiveContainer height={400} >
           <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
             <CartesianGrid />
@@ -117,6 +120,7 @@ class App extends Component {
           updateEvents={this.updateEvents}
           numberOfEvents={this.state.numberOfEvents}
         />
+        </div>
       </div>
     );
   }
